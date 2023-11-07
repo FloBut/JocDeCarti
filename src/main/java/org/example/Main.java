@@ -1,4 +1,8 @@
 package org.example;
+
+import java.util.ArrayList;
+import java.util.List;
+
 //Dezvoltati o aplicatie Java pentru simularea jocurilor de carti:
 //
 //BlackJack
@@ -31,6 +35,31 @@ package org.example;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
+        // imi pun mai multi jucatori
+        Player player1 = new Player("player01");
+        Player player2 = new Player("player02");
+        Player player3 = new Player("player03");
+        Player player4 = new Player("player04");
+        Player player5 = new Player("player05");
+        Player player6 = new Player("player05");
+
+        //fac o lista cu jucatori
+        List<Player> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+        players.add(player4);
+        players.add(player5);
+        players.add(player6);
+
+
+        GameStarter gameStarter = new GameStarter(players);
+        BlackJack blackJack = new BlackJack(3, players);
+        blackJack.deal();
+        blackJack.play();
+
+
+
 
     }
 }

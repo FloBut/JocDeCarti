@@ -11,10 +11,12 @@ import static org.example.Card.getDeckCards;
 // si castiga jucatorul cu cea mai mare carte.
 public class Poker extends Game {
     Map<Player, List<Card>> playerOnDeck;
+
     public Poker(int noOfPlayers) {
         super(noOfPlayers);
-        playerOnDeck = new HashMap<>();
+        this.playerOnDeck = playerOnDeck;
     }
+
     // impart carile:
     // pentru fiecare jucator impart o lista de carti deci in mapa pun
     // jucatorul si lista lui de carti

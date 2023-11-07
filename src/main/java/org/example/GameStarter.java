@@ -1,7 +1,16 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameStarter {
-    //Pentru pornirea jocurilor se creeaza o clasa GameStarter
+    List<Player> players = new ArrayList<>();
+
+    public GameStarter(List<Player> players) {
+        this.players = players;
+    }
+
+//Pentru pornirea jocurilor se creeaza o clasa GameStarter
     // care contine metoda de start in interiorul careia se fac
     // declararile si initializarile pentru un anumit joc.
 
@@ -12,7 +21,7 @@ public class GameStarter {
     //        //mi ar trebui o mapa in care pentru fiecare nume de jucator
     //        - care va fi cheia sa am o lista de carti - valorile
     public void startGame() {
-        BlackJack blackJack = new BlackJack(4);
+        BlackJack blackJack = new BlackJack(4, players);
         Poker poker = new Poker(6);
     }
 }

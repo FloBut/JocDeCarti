@@ -12,10 +12,13 @@ public class BlackJack extends Game {
 
 //clasa va extinde game deci are un numar de jucatori si va suprascrie metodele deal si play
 
-    public BlackJack(int noOfPlayers) {
+
+    public BlackJack(int noOfPlayers, List<Player> players) {
         super(noOfPlayers);
-        this.dealtCards = new HashMap<>(); //
+        this.dealtCards = dealtCards;
+        this.setPlayers(getPlayers());
     }
+
     public Map<Player, List<Card>> getDealtCards() {
         return this.dealtCards;
     }
