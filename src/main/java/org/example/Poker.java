@@ -50,22 +50,29 @@ public class Poker extends Game {
 
 
         int winner = 0;
-        String nameOfWinner = "";
+       Player nameOfWinner;
         //parcurg mapa in care am jucatorii si lista lor de carti
         Map<Player, List<Card>> players = this.playerOnDeck;
         //pentru fiecare jucator parcurg lista lui de carti si aflu cartea cu valoarea cea mai mare
         for (Map.Entry<Player, List<Card>> entry: players.entrySet()) {
             int highestCards = 0;
             // parcurg lista de carti din mapa
+            int maxValue = 0;
             for (Card card: entry.getValue()) {
-                //pentru fiecare carte din lista ar trebui sa scot valoarea intreaga si sa o compar
-                // cu restul valorilor din lista respectiva
+                maxValue = 0;
+                String nameOfPlayer = "";
+                int noOfCard = card.getValueIntOfCard(card);//imi scot valoarea intreaga a cartii
+               // si sa o compar cu restul valorilor din lista respectiva
+                if (noOfCard > maxValue) {
+                    maxValue = noOfCard;
 
-
+                }
+            }
+            //aici fiecare maxValue tre sa aiba valoarea maxima pentru fiecare lista
+            //si deci scot acum maximul din mapa
+            if (maxValue > highestCards) {
+                nameOfWinner = entry.getKey();
             }
         }
-
-
-
     }
 }
