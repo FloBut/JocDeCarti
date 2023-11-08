@@ -20,8 +20,21 @@ public class GameStarter {
     //    // un set de carti aleator(valoare).
     //        //mi ar trebui o mapa in care pentru fiecare nume de jucator
     //        - care va fi cheia sa am o lista de carti - valorile
-    public void startGame() {
-        BlackJack blackJack = new BlackJack(4, players);
-        Poker poker = new Poker(6);
+    public void startBlackJackGame() {
+        BlackJack blackJack = new BlackJack(players.size(), players);
+        Card card = new Card();
+        card.generateCards();
+        card.shuffleCards();
+        blackJack.deal();
+        blackJack.play();
     }
+    public void startPokerGame() {
+        Poker poker = new Poker(players.size());
+        Card card = new Card();
+        card.generateCards();
+        card.shuffleCards();
+        poker.deal();
+        poker.play();
+    }
+
 }

@@ -9,10 +9,11 @@ public class Card {
     private  List<String> symbols ; //lista in care pun simbolul cartilor
     private static List<String> deckCards;//lista cu carti
 
-    public Card(List<Integer> numbers, List<String> symbols) {
+    public Card() {
         this.numbers =  List.of(2,3,4,5,6,7,8,9,10,11,12,13,14);
         this.symbols = List.of("Hearts","Spades", "Diamonds","Clubs");
         this.deckCards = new ArrayList<String>();
+        getDeckCards();
     }
 
     public List<Integer> getNumbers() {
@@ -32,9 +33,10 @@ public class Card {
     }
     //adaug in lista de carti  fiecare carte cu simbolul ei
     public void generateCards() {
-        for (int i = 0; i < numbers.size();i++) {
-            for (int j = 0; j < symbols.size(); j++) {
-                deckCards.add(numbers.get(i) +  "of"  + symbols.get(j));
+        deckCards.clear();// lista de carti
+        for (int number: numbers ) {
+            for (String symbol: symbols) {
+                deckCards.add(number +  "of"  + symbol);
             }
         }
     }
@@ -45,20 +47,17 @@ public class Card {
 
     //returnez pachetul de carti amestecate
     public static List<String> getDeckCards() {
+        if (deckCards == null) {
+            deckCards = new ArrayList<>();
+        }
         return deckCards;
     }
 
     //vreau valoare intreaga a fiecarui numar din carte din setul de carti amestecate
-    public int getValueIntOfCard(Card card) {
-        List<String> cards = deckCards;
-        int valuOfCard = 0;//declar o var de tip int
-        for (int i = 0; i < cards.size(); i++) {//parcurg lista de carti
-            String[] value = cards.get(i).split("of"); // scot intr un array de stringuri fiecare carte
-            String cardNo = value[0];// prima valoare din array o pun intr un string
-            valuOfCard = Integer.parseInt(cardNo);// acum scot partea intreaga din string
-            break;
-        }
-       return valuOfCard;
+    public int getValueIntOfCard() {
+        String[] value = deckCards.get(0).split(" of ");
+        String cardNo = value[0];
+        return Integer.parseInt(cardNo);
     }
 
     //imi mai trebuie o metoda care in care sa pun cartile pe care le -am scos pe masa

@@ -14,7 +14,7 @@ public class Poker extends Game {
 
     public Poker(int noOfPlayers) {
         super(noOfPlayers);
-        this.playerOnDeck = playerOnDeck;
+        this.playerOnDeck = new HashMap<>();
     }
 
     // impart carile:
@@ -23,15 +23,15 @@ public class Poker extends Game {
     @Override
     public void deal() {
         int cardsDeal = 5;//numarul de carti pe care le impart
-        Map<Player, List<String>> cardsOnDeck = new HashMap<>();// mapa in care pun jucatorul si lista lui de carti
+        Map<Player, List<Card>> cardsOnDeck = new HashMap<>();// mapa in care pun jucatorul si lista lui de carti
         // imi trebuie lista de carti si o obtin cu metoda getDecCards
-        List<String> listOfCardsForPlayers = new ArrayList<>();
+        List<Card> listOfCardsForPlayers = new ArrayList<>();
         //pentru fiecare jucator
         for (Player player : this.getPlayers()) {
             for (int i = 0; i < cardsDeal; i++) {
                 if (!(Card.getDeckCards().isEmpty())) {
-                    String cards = getDeckCards().remove(0);//iau cate o carte din pachet
-                    listOfCardsForPlayers.add(cards);//fiecare carte o pun in lista de carti pentru jucator
+                    Card card = (Card) Card.getDeckCards();//iau cate o carte din pachet
+                    listOfCardsForPlayers.add(card);//fiecare carte o pun in lista de carti pentru jucator
                 }
             }
             cardsOnDeck.put(player, listOfCardsForPlayers);
@@ -63,7 +63,7 @@ public class Poker extends Game {
             for (Card card: entry.getValue()) {
                 maxValue = 0;
                 String nameOfPlayer = "";
-                int noOfCard = card.getValueIntOfCard(card);//imi scot valoarea intreaga a cartii
+                int noOfCard = card.getValueIntOfCard();//imi scot valoarea intreaga a cartii
                // si sa o compar cu restul valorilor din lista respectiva
                 if (noOfCard > maxValue) {
                     maxValue = noOfCard;

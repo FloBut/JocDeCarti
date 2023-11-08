@@ -15,8 +15,8 @@ public class BlackJack extends Game {
 
     public BlackJack(int noOfPlayers, List<Player> players) {
         super(noOfPlayers);
-        this.dealtCards = dealtCards;
-        this.setPlayers(getPlayers());
+        this.dealtCards = new HashMap<>();
+        this.setPlayers(players);
     }
 
     public Map<Player, List<Card>> getDealtCards() {
@@ -39,12 +39,15 @@ public class BlackJack extends Game {
         //pentru fiecare jucator din lista de jucatori -> cum accesez lista de jucatori
         // imi pun lista de carti
         // accesez lista de jucatori din clasa Game
-        for (Player nameOfPlayer : this.getPlayers()) {
+        for (Player player : getPlayers()) {
             List<String> cardsForPlayer = new ArrayList<>();
             for (int i = 0; i < cardsDeal; i++) {
                 //pentru fiecare jucator imi creez o lista de carti o lista de carti
                 if (!(Card.getDeckCards().isEmpty())) {
-                    String dealtCards = cardsAll.remove(0);//imi iau cate o carte din pachetul de carti
+
+                    String dealtCards = cardsAll.remove(0);
+                    //imi iau cate o carte din pachetul de carti
+
                     cardsForPlayer.add(dealtCards); //fiecare carte luata o pun in lista pentru jucatorul curent
                 } else {
                     System.out.println("Deck is empty");
@@ -52,8 +55,9 @@ public class BlackJack extends Game {
                 }
             }
         //acum pun si in mapa numele jucatorului si lista de carti
-            dealCards.put(nameOfPlayer, cardsForPlayer);
+            dealCards.put(player, cardsForPlayer);
         }
+        this.dealtCards = dealtCards;
 
 
 
@@ -73,19 +77,24 @@ public class BlackJack extends Game {
         int maxScore = 0;// declar o var in care voi pune maximul
         Player winnerName = null;// aici voi pune numele casticatorului
         //parcurg mapa cu jucatorul si lista lui de carti
-        for (Map.Entry<Player, List<Card>> entry: findWinner.entrySet()) {
+        for (Map.Entry<Player, List<Card>> entry : findWinner.entrySet()) {
             // fac suma pentru cartile pe care le are
-           int sum = 0;
+            int sum = 0;
             //pentru fiecare carte tre sa imi scot numarul din carte deorece cartea este
             // alcatuita din numar si tipul ei
-            for (Card card: entry.getValue()) {
-               int no = card.getValueIntOfCard(card);//apelez metoda in care imi scot valoare intreaga din carte
-               sum += no;
-           }
-            if (sum >= 21 & sum >= maxScore) {
+            for (Card card : entry.getValue()) {
+                int no = card.getValueIntOfCard();//apelez metoda in care imi scot valoare intreaga din carte
+                sum += no;
+            }
+            if (sum <= 21 & sum >= maxScore) {
                 maxScore = sum;
                 winnerName = entry.getKey();
             }
+        }
+        if (winnerName != null) {
+            System.out.println("The winner is " + winnerName.getName() + " with a score of " + maxScore);
+        } else {
+            System.out.println("No winner found.");
         }
     }
 

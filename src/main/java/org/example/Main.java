@@ -54,9 +54,14 @@ public class Main {
 
 
         GameStarter gameStarter = new GameStarter(players);
-        BlackJack blackJack = new BlackJack(3, players);
-        blackJack.deal();
-        blackJack.play();
+        gameStarter.startBlackJackGame();
+        //aici primesc  No winner found.
+
+
+        GameStarter gameStarter1 = new GameStarter(players);
+        gameStarter1.startPokerGame();
+        //aici primesc No players in the game.
+
 
 
 
