@@ -5,15 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.example.Card.getDeckCards;
-
 //Pentru Poker se distribuie cate 8 carti fiecarui jucator
 // si castiga jucatorul cu cea mai mare carte.
 public class Poker extends Game {
     Map<Player, List<Card>> playerOnDeck;
 
-    public Poker(int noOfPlayers) {
-        super(noOfPlayers);
+    public Poker(int noOfPlayers,List<Player> players) {
+        super(noOfPlayers, players);
         this.playerOnDeck = new HashMap<>();
     }
 
@@ -24,18 +22,24 @@ public class Poker extends Game {
     public void deal() {
         int cardsDeal = 5;//numarul de carti pe care le impart
         Map<Player, List<Card>> cardsOnDeck = new HashMap<>();// mapa in care pun jucatorul si lista lui de carti
-        // imi trebuie lista de carti si o obtin cu metoda getDecCards
-        List<Card> listOfCardsForPlayers = new ArrayList<>();
+
         //pentru fiecare jucator
         for (Player player : this.getPlayers()) {
+            // imi trebuie lista de carti si o obtin cu metoda getDecCards
+            List<Card> listOfCardsForPlayers = new ArrayList<>();
+
+            //impart cartile
             for (int i = 0; i < cardsDeal; i++) {
-                if (!(Card.getDeckCards().isEmpty())) {
-                    Card card = (Card) Card.getDeckCards();//iau cate o carte din pachet
-                    listOfCardsForPlayers.add(card);//fiecare carte o pun in lista de carti pentru jucator
+                if (!Card.getDeckCards().isEmpty()) {
+                    Card card = new Card();
+                    listOfCardsForPlayers.add(card.drawCard());; // iau cate o carte din pachet
+                     // fiecare carte o pun in lista de carti pentru jucator
                 }
             }
             cardsOnDeck.put(player, listOfCardsForPlayers);
         }
+        // actualizez mapa cu cartile impartite
+        this.playerOnDeck = cardsOnDeck;
     }
 
     @Override
@@ -51,30 +55,28 @@ public class Poker extends Game {
         //din cele 6  maximuri voi determina un maxim si numele jucatorului
 
 
-        int winner = 0;
-       Player nameOfWinner;
+        int highestCards = 0;
+        Player nameOfWinner = null;;
         //parcurg mapa in care am jucatorii si lista lor de carti
         Map<Player, List<Card>> players = this.playerOnDeck;
         //pentru fiecare jucator parcurg lista lui de carti si aflu cartea cu valoarea cea mai mare
         for (Map.Entry<Player, List<Card>> entry: players.entrySet()) {
-            int highestCards = 0;
             // parcurg lista de carti din mapa
-            int maxValue = 0;
-            for (Card card: entry.getValue()) {
-                maxValue = 0;
-                String nameOfPlayer = "";
+            for (Card card : entry.getValue()) {
                 int noOfCard = card.getValueIntOfCard();//imi scot valoarea intreaga a cartii
-               // si sa o compar cu restul valorilor din lista respectiva
-                if (noOfCard > maxValue) {
-                    maxValue = noOfCard;
+                // si sa o compar cu restul valorilor din lista respectiva
+                if (noOfCard >= highestCards) {
+                    highestCards = noOfCard;
+                    nameOfWinner = entry.getKey();
 
                 }
             }
-            //aici fiecare maxValue tre sa aiba valoarea maxima pentru fiecare lista
-            //si deci scot acum maximul din mapa
-            if (maxValue > highestCards) {
-                nameOfWinner = entry.getKey();
-            }
+        }
+            //aici afizez castigatorul
+        if (nameOfWinner != null) {
+            System.out.println("The winner is " + nameOfWinner.getName() + " with the highest card value of " + highestCards);
+        } else {
+            System.out.println("No winner found.");
         }
     }
 }

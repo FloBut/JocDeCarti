@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.Card;
+import org.example.Game;
+import org.example.Player;
+
 import java.util.*;
 
 import static org.example.Card.getDeckCards;
@@ -14,9 +18,8 @@ public class BlackJack extends Game {
 
 
     public BlackJack(int noOfPlayers, List<Player> players) {
-        super(noOfPlayers);
+        super(noOfPlayers, players);
         this.dealtCards = new HashMap<>();
-        this.setPlayers(players);
     }
 
     public Map<Player, List<Card>> getDealtCards() {
@@ -34,17 +37,16 @@ public class BlackJack extends Game {
         //pentru fiecare jucator din mapa ar trebui sa pun o lista de carti
         // deci mai intai tre fac lista de carti
         //cum scot lista de carti din clasa card ?
-        List<String> cardsAll = getDeckCards();// apelez metoda care imi returneaza lista de carti amestecata
+        List<String> cardsAll = Card.getDeckCards();// apelez metoda care imi returneaza lista de carti amestecata
 
         //pentru fiecare jucator din lista de jucatori -> cum accesez lista de jucatori
         // imi pun lista de carti
         // accesez lista de jucatori din clasa Game
-        for (Player player : getPlayers()) {
+        for (Player player : this.getPlayers()) {
             List<String> cardsForPlayer = new ArrayList<>();
             for (int i = 0; i < cardsDeal; i++) {
                 //pentru fiecare jucator imi creez o lista de carti o lista de carti
                 if (!(Card.getDeckCards().isEmpty())) {
-
                     String dealtCards = cardsAll.remove(0);
                     //imi iau cate o carte din pachetul de carti
 
@@ -54,7 +56,7 @@ public class BlackJack extends Game {
                     break;
                 }
             }
-        //acum pun si in mapa numele jucatorului si lista de carti
+            //acum pun si in mapa numele jucatorului si lista de carti
             dealCards.put(player, cardsForPlayer);
         }
         this.dealtCards = dealtCards;

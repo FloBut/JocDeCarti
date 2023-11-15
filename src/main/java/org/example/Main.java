@@ -41,9 +41,8 @@ public class Main {
         Player player3 = new Player("player03");
         Player player4 = new Player("player04");
         Player player5 = new Player("player05");
-        Player player6 = new Player("player05");
+        Player player6 = new Player("player06");
 
-        //fac o lista cu jucatori
         List<Player> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
@@ -52,19 +51,24 @@ public class Main {
         players.add(player5);
         players.add(player6);
 
-
         GameStarter gameStarter = new GameStarter(players);
-        gameStarter.startBlackJackGame();
-        //aici primesc  No winner found.
+        gameStarter.addPlayer(new Player("player01"));
+        gameStarter.addPlayer(new Player("player02"));
+        gameStarter.addPlayer(new Player("player03"));
+        gameStarter.startBlackJackGame();  // Should print "No winner found."
 
-
-        GameStarter gameStarter1 = new GameStarter(players);
-        gameStarter1.startPokerGame();
-        //aici primesc No players in the game.
-
-
-
-
-
+        //GameStarter gameStarter1 = new GameStarter(players);
+        //gameStarter1.addPlayer(new Player("player06"));
+        // gameStarter1.addPlayer(new Player("player07"));
+        //gameStarter1.addPlayer(new Player("player08"));
+        //gameStarter1.startPokerGame();  // Should print "No players in the game."
     }
 }
+
+
+
+
+
+
+
+        //aici primesc No players in the game.

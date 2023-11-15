@@ -8,29 +8,38 @@ public class Game {
     private List<Card> setOfCards;//lista de carti care este definita in clasacard si este returnata de metoda getDeckCards()
     private List<Player> players;//o lista de jucatori
 
-    public Game(int noOfPlayers) {
+    public Game(int noOfPlayers, List<Player> players) {
         this.noOfPlayers = noOfPlayers;
-        this.setOfCards = new ArrayList<>();
-        this.players = new ArrayList<>();
+        this.setOfCards = setOfCards;
+        this.players = new ArrayList<>(players);
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public int getNoOfPlayers() {
+        return noOfPlayers;
     }
 
-    public void setPlayers(List<Player> players) {
-        this.players = players;
+    public void setNoOfPlayers(int noOfPlayers) {
+        this.noOfPlayers = noOfPlayers;
+    }
+
+    public void deal(){
+        System.out.println("Dealing cards...");
+
+    }
+
+    public void play() {
+        System.out.println("Playing the game...");
+
     }
     public void addPlayer(Player player) {
         players.add(player);
     }
 
-    public void deal(){
-
+    public void removePlayer(Player player) {
+        players.remove(player);
     }
-
-    public void play() {
-
+    public List<Player> getPlayers() {
+        return players;
     }
 
 }
