@@ -1,105 +1,47 @@
 package org.example;
 
-import org.example.Card;
-import org.example.Game;
-import org.example.Player;
-
 import java.util.*;
 
-import static org.example.Card.getDeckCards;
-
 public class BlackJack extends Game {
-    private Map<Player, List<Card>> dealtCards; //imi trebuie o mapa pe care sa o folosesc in metoda play()
+        public BlackJack(List<Player> players) {
+        super( players);
 
-//Pentru jocul de BlackJack se distribuie cate 5 carti fiecarui jucator
-// si castiga jucatorul care are suma cartilor cea mai apropiata de 21.
-
-//clasa va extinde game deci are un numar de jucatori si va suprascrie metodele deal si play
-
-
-    public BlackJack(int noOfPlayers, List<Player> players) {
-        super(noOfPlayers, players);
-        this.dealtCards = new HashMap<>();
     }
 
-    public Map<Player, List<Card>> getDealtCards() {
-        return this.dealtCards;
-    }
-    //am numarul de carti pentru fiecare jucator
-    //pentru fiecare jucator ar trebui sa ii dau cate 5 carti, cum fac asta?
-    // cu o mapa - >
-    // pun numele jucatorlui - cheie  si lista de carti va fi valoarea
 
     @Override
-    public void deal() {
-        int cardsDeal = 5;
-        Map<Player, List<String>> dealCards = new HashMap<>();
-        //pentru fiecare jucator din mapa ar trebui sa pun o lista de carti
-        // deci mai intai tre fac lista de carti
-        //cum scot lista de carti din clasa card ?
-        List<String> cardsAll = Card.getDeckCards();// apelez metoda care imi returneaza lista de carti amestecata
-
-        //pentru fiecare jucator din lista de jucatori -> cum accesez lista de jucatori
-        // imi pun lista de carti
-        // accesez lista de jucatori din clasa Game
-        for (Player player : this.getPlayers()) {
-            List<String> cardsForPlayer = new ArrayList<>();
-            for (int i = 0; i < cardsDeal; i++) {
-                //pentru fiecare jucator imi creez o lista de carti o lista de carti
-                if (!(Card.getDeckCards().isEmpty())) {
-                    String dealtCards = cardsAll.remove(0);
-                    //imi iau cate o carte din pachetul de carti
-
-                    cardsForPlayer.add(dealtCards); //fiecare carte luata o pun in lista pentru jucatorul curent
-                } else {
-                    System.out.println("Deck is empty");
-                    break;
-                }
+    public void deal() throws Exception {
+        //parcurg fiecare jucator
+        for (Player player: getPlayers()){
+            //setez mana jucatorului cu 5 carti luate din setul de carti
+            //atata timp cat suma curenta din mana jucatorului este mai mica sau egala decat 21
+            while (player.getHandSumValue() <= 21){
+                player.getHand().add(getSetOfCards().remove(0));
             }
-            //acum pun si in mapa numele jucatorului si lista de carti
-            dealCards.put(player, cardsForPlayer);
+            System.out.println("player hand: " + player.getName() + " " + player.getHand());
         }
-        this.dealtCards = dealtCards;
-
-
-
     }
 
-    //// castiga jucatorul care are suma cartilor cea mai apropiata de 21.
-//iau fiecare mapa returnata de metoda de mai sus si calculez un maxim si returez
-// cheia corespunazatore maximului
+
     @Override
-    public void play() {
-        //daca lista de jucatori e goala nu am cu cine juca
-        if (this.getPlayers().isEmpty()) {
-            System.out.println("No player in the game");
-            return;
-        }
-        Map<Player, List<Card>> findWinner = this.getDealtCards();
-        int maxScore = 0;// declar o var in care voi pune maximul
-        Player winnerName = null;// aici voi pune numele casticatorului
-        //parcurg mapa cu jucatorul si lista lui de carti
-        for (Map.Entry<Player, List<Card>> entry : findWinner.entrySet()) {
-            // fac suma pentru cartile pe care le are
-            int sum = 0;
-            //pentru fiecare carte tre sa imi scot numarul din carte deorece cartea este
-            // alcatuita din numar si tipul ei
-            for (Card card : entry.getValue()) {
-                int no = card.getValueIntOfCard();//apelez metoda in care imi scot valoare intreaga din carte
-                sum += no;
-            }
-            if (sum <= 21 & sum >= maxScore) {
-                maxScore = sum;
-                winnerName = entry.getKey();
+    public String play() throws Exception {
+
+        //calculez suma cartilor pentru fiecare jucator
+        //vad care este suma mai mica sau egala decat 21 cu diferenta minima fata de 21
+        Integer minDifference = Integer.MAX_VALUE;
+        String winnerName = "";
+        for (Player player: getPlayers()){
+            Integer currentPlayerSum = player.getHandSumValue();
+            System.out.println(player.getName() + " "+ player.getHandSumValue());
+            if (currentPlayerSum <= 21 && 21 - currentPlayerSum < minDifference ){
+                minDifference = 21 - currentPlayerSum;
+                winnerName = player.getName();
+
             }
         }
-        if (winnerName != null) {
-            System.out.println("The winner is " + winnerName.getName() + " with a score of " + maxScore);
-        } else {
-            System.out.println("No winner found.");
-        }
+
+        return winnerName;
     }
 
-    //Pentru Poker se distribuie cate 8 carti fiecarui jucator
-    // si castiga jucatorul cu cea mai mare carte.
+
 }

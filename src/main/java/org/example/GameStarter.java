@@ -1,17 +1,11 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameStarter {
-    List<Player> players;
 
-    public GameStarter(List<Player> players) {
-        this.players  = new ArrayList<>();
-    }
-    public void addPlayer(Player player) {
-        players.add(player);
-    }
 
 //Pentru pornirea jocurilor se creeaza o clasa GameStarter
     // care contine metoda de start in interiorul careia se fac
@@ -24,13 +18,21 @@ public class GameStarter {
     //        //mi ar trebui o mapa in care pentru fiecare nume de jucator
     //        - care va fi cheia sa am o lista de carti - valorile
     public void startBlackJackGame() {
-        Card.getDeckCards();
-        BlackJack blackJack = new BlackJack(players.size(), players);
-        blackJack.deal();
-        blackJack.play();
+
+        Player player1 = new Player("Costel");
+        Player player2 = new Player("Mirel");
+        BlackJack blackJack = new BlackJack(Arrays.asList(player1,player2));
+        try {
+            blackJack.deal();
+            System.out.println(blackJack.play());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
     }
-    public void startPokerGame() {
-        Card.getDeckCards();
+   /* public void startPokerGame() {
+        Deck.getDeckCards();
         if (players == null || players.isEmpty()) {
             System.out.println("No players to start the game.");
             return;
@@ -38,6 +40,6 @@ public class GameStarter {
         Poker poker = new Poker(players.size(), players);
         poker.deal();
         poker.play();
-    }
+    }*/
 
 }
